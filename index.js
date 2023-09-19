@@ -1,5 +1,7 @@
 const express = require("express");
 const moment = require("moment");
+const config = require("./database/config");
+const { query } = require("./database/db");
 require("dotenv").config();
 
 const port = process.env.PORT || 3001;
@@ -24,6 +26,15 @@ app.get("/test1", (req, res)=>{
     let html = `<table><th>Name</th><th>Password</th></table>`
 
     res.send(html);
+});
+
+app.get("/cities", async(req, res)=>{
+    try{
+        const cities = await query("SELECT * FROM users");
+        res.status(200).json({cities});
+    }catch(erorr){
+        res.status(500).json({message: "internal server erorr"});
+    }
 })
 
 const dummyUsers = () =>{
