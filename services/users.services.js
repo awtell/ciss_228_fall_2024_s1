@@ -3,9 +3,13 @@ const { query } = require("../database/db");
 
 
 const getUsers = async() => {
-    let sql = `SELECT * FROM users`;
-    const users = await query(sql);
-    return users;
+    try {
+        let sql = `SELECT * FROM users`;
+        const users = await query(sql);
+        return users;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
 const getUserById = async(id) =>{
@@ -14,8 +18,15 @@ const getUserById = async(id) =>{
     return user;
 } 
 
-const insertUser = async(user) =>{
-    const {user_name, user_username, user_email, user_password, user_dob} = user;
+const insertUser = async(userName,
+    userUserName,
+    userEmail,
+    userPassword,
+    userDob,
+    userMobileNumber,
+    userDescription,
+    userAddress) =>{
+
     let sql = `INSERT INTO user 
     (user_name, user_username, user_email, user_password, user_dob)
     VALUES
@@ -23,11 +34,11 @@ const insertUser = async(user) =>{
     `;
     const result = await query(sql, 
         [
-            user_name, 
-            user_username, 
-            user_email, 
-            user_password, 
-            moment(user_dob).format("YYYY-MM-DD")
+            userName, 
+            userUserName, 
+            userEmail, 
+            userEmail, 
+            moment(userDob).format("YYYY-MM-DD")
         ]);
     return result;
 }
@@ -48,7 +59,7 @@ const updateUser = async(user) => {
 }
 
 const deleteUser = async(id) =>{
-    return await query(`DELETE FROM user WHERE user_id = ?`, [id]);
+    return await query("DELETE FROM user WHERE user_id = ?", [id]);
 }
 
 module.exports = {
@@ -56,4 +67,5 @@ module.exports = {
     getUserById,
     insertUser,
     updateUser,
+    deleteUser,
 }
