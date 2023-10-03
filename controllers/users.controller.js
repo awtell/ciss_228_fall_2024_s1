@@ -29,7 +29,7 @@ const insertUserController = async (req, res) =>
         || userPassword || userPassword !== ''
         )
     {
-        res.status(400).json({message: "missing data"});
+        return res.status(400).json({message: "missing data"});
     }
 
     try{
