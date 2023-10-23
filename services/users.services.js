@@ -1,4 +1,5 @@
 const { query } = require("../database/db");
+const moment = require("moment");
 
 
 
@@ -27,7 +28,7 @@ const insertUser = async(userName,
     userDescription,
     userAddress) =>{
 
-    let sql = `INSERT INTO user 
+    let sql = `INSERT INTO users 
     (user_name, user_username, user_email, user_password, user_dob)
     VALUES
     (?, ?, ?, ?, ?);
@@ -40,7 +41,9 @@ const insertUser = async(userName,
             userEmail, 
             moment(userDob).format("YYYY-MM-DD")
         ]);
-    return result;
+    const user = await query("select * from users where user_id = ?", [result.insertId]);
+
+    return user[0];
 }
 
 const updateUser = async(user) => {
