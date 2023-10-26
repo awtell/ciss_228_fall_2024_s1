@@ -26,7 +26,8 @@ const createClient = async (firstName, lastName, username, password, email, mobi
 
 const getAllClients = async () =>{
     try{
-        const client = await Client.findAll({include: [{model: Country}]});
+        //const client = await Client.findAll({include: [{model: Country}]});
+        const client = await Client.findAll();
         return client;
     }catch(e){
         console.error(e);

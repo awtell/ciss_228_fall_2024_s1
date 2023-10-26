@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const sequelize = require("../DB/configSqlz");
+const sequelize = require("../database/configSqlz");
 const Client = require("./Client");
 
 
@@ -30,8 +30,8 @@ const Country = sequelize.define('Country', {
 );
 
 // it has error we need to fix.
-Country.associate = () =>{
-    Country.hasMany(Client, {foreignKey: 'country_id'});
-}
+// Country.associate = () =>{
+//     Country.hasMany(Client, {foreignKey: 'country_id'});
+// }
 
 module.exports = Country;

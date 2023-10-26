@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(cors({origin: '*'}));
 
 const users = require('./routes/users.routes');
+const clients = require('./routes/client.routes');
 
 app.get("/", (req, res)=>{
     res.status(200).json({message: "this is the index page"})
@@ -23,6 +24,7 @@ app.get("/", (req, res)=>{
 
 
 app.use('/api/users', users);
+app.use('/api/clients', clients);
 
 
 

@@ -1,7 +1,6 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../DB/configSqlz");
+const { DataTypes, Op } = require("sequelize");
+const sequelize = require("../database/configSqlz");
 const Country = require("./Country");
-
 
 const Client = sequelize.define('Client', {
     client_id: {
@@ -63,8 +62,8 @@ const Client = sequelize.define('Client', {
 }
 );
 
-Client.associate = () => {
-    Client.belongsTo(Country, {foreignKey: 'country_id'});
-}
+// Client.associate = () => {
+//     Client.belongsTo(Country, {foreignKey: 'country_id'});
+// }
 
 module.exports = Client;
