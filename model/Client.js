@@ -62,8 +62,6 @@ const Client = sequelize.define('Client', {
 }
 );
 
-// Client.associate = () => {
-//     Client.belongsTo(Country, {foreignKey: 'country_id'});
-// }
+Client.belongsTo(Country, {foreignKey: 'country_id'});
 
 module.exports = Client;
