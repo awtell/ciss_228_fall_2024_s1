@@ -19,6 +19,19 @@ const getUserById = async(id) =>{
     return user;
 } 
 
+/**
+ * 
+ * @param {String} userName 
+ * @param {String} userUserName 
+ * @param {String} userEmail 
+ * @param {String} userPassword 
+ * @param {Date} userDob 
+ * @param {String} userMobileNumber 
+ * @param {String} userDescription 
+ * @param {String} userAddress 
+ * is used to insert a user into the database
+ * @returns User
+ */
 const insertUser = async(userName,
     userUserName,
     userEmail,
@@ -28,22 +41,26 @@ const insertUser = async(userName,
     userDescription,
     userAddress) =>{
 
-    let sql = `INSERT INTO users 
-    (user_name, user_username, user_email, user_password, user_dob)
-    VALUES
-    (?, ?, ?, ?, ?);
-    `;
-    const result = await query(sql, 
-        [
-            userName, 
-            userUserName, 
-            userEmail, 
-            userEmail, 
-            moment(userDob).format("YYYY-MM-DD")
-        ]);
-    const user = await query("select * from users where user_id = ?", [result.insertId]);
-
-    return user[0];
+        try{// this is the native sql for inserting a user.
+            let sql = `INSERT INTO users 
+            (user_name, user_username, user_email, user_password, user_dob)
+            VALUES
+            (?, ?, ?, ?, ?);
+            `;
+            const result = await query(sql, 
+                [
+                    userName, 
+                    userUserName, 
+                    userEmail, 
+                    userEmail, 
+                    moment(userDob).format("YYYY-MM-DD")
+                ]);
+            const user = await query("select * from users where user_id = ?", [result.insertId]);
+        
+            return user[0];
+        }catch(error){
+            throw new Error(error);
+        }
 }
 
 const updateUser = async(user) => {
