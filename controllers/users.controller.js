@@ -1,5 +1,18 @@
+const jwt = require("jsonwebtoken");
 const { validationResult } = require('express-validator');
-const { getUsers, insertUser } = require('../services/users.services');
+const { getUsers, insertUser, authenticate } = require('../services/users.services');
+
+const authenticateController = async(req, res) => {
+  const {username, password} = req.body;
+  if(!username){
+    res.status(401).json({message: "missing data"});
+  }
+
+  const result = await authenticate(username, password);
+  // generate token
+  const token = jwt.sign({userId: result?.user_id}, process.env.SECRET_KEY);
+  res.status(200).json({message: "authenticated", user: result, token: token});
+}
 
 const getUsersController = async (req, res) => {
   try {
@@ -48,4 +61,5 @@ const insertUserController = async (req, res) => {
 module.exports = {
   getUsersController,
   insertUserController,
+  authenticateController,
 };

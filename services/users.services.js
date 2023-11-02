@@ -2,6 +2,16 @@ const { query } = require("../database/db");
 const moment = require("moment");
 
 
+const authenticate = async (username, password) => {
+    try {
+        let sql = `SELECT * FROM users WHERE user_name = ?
+    AND user_password = ?`
+        const user = await query(sql, [username, password]);
+        return user[0];
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 const getUsers = async() => {
     try {
@@ -88,4 +98,5 @@ module.exports = {
     insertUser,
     updateUser,
     deleteUser,
+    authenticate,
 }
