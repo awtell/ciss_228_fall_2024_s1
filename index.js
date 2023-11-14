@@ -4,9 +4,13 @@ require("dotenv").config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const ejs = require("ejs");
+
 const port = process.env.PORT || 3001;
 
 const app = express();
+
+app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -19,8 +23,12 @@ const typi = require('./routes/typi.routes');
 const { getTypicode, insertTypiCodes } = require("./services/fetchData");
 
 app.get("/", async (req, res)=>{
-    const post = await insertTypiCodes();
-    res.status(200).json({post});
+    const data = {
+        message: "Hello EJS",
+        content: "You are a templating language used in nodejs"
+    }
+
+    res.render('index', data);
 });
 
 
