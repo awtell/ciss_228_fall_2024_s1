@@ -21,13 +21,16 @@ const users = require('./routes/users.routes');
 const clients = require('./routes/client.routes');
 const typi = require('./routes/typi.routes');
 const { getTypicode, insertTypiCodes } = require("./services/fetchData");
+const { query } = require("./database/db");
 
 app.get("/", async (req, res)=>{
+    const users = await query("select * from users");
     const data = {
-        message: "Hello EJS",
-        content: "You are a templating language used in nodejs"
+        message: "test message",
+        content: "this is the content",
+        users: users,
     }
-
+    //res.status(200).json({data});
     res.render('index', data);
 });
 
