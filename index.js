@@ -4,6 +4,8 @@ require("dotenv").config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const schedule = require("node-schedule");
+
 const ejs = require("ejs");
 
 const port = process.env.PORT || 3001;
@@ -35,13 +37,29 @@ app.get("/", async (req, res)=>{
 });
 
 
+
+
 app.use('/api/users', users);
 app.use('/api/clients', clients);
 app.use('/api/typi', typi);
 
 
 
+const startCronJob = () =>{
+    const job = schedule.scheduleJob('* * * * *', ()=>{
+        console.log('Scheduled task is running at: ', new Date());
+    });
+}
 
+const startSpecificData = (date) => {
+    const job = schedule.scheduleJob(date, ()=>{
+        console.log("destruct database at: "+ new Date());
+    });
+}
+
+//startCronJob();
+const specificDate = new Date(Date.now() + 5 * 1000);
+startSpecificData(specificDate);
 
 
 
